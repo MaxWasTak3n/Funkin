@@ -26,7 +26,7 @@ class Character extends FlxSprite
 		this.isPlayer = isPlayer;
 
 		var tex:FlxAtlasFrames;
-		antialiasing = true;
+		antialiasing = Settings.antialiasing;
 
 		switch (curCharacter)
 		{
@@ -92,7 +92,7 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
-
+				antialiasing = Settings.antialiasing;
 			case 'gf-car':
 				tex = Paths.getSparrowAtlas('gfCar');
 				frames = tex;
@@ -139,6 +139,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 			case 'spooky':
 				tex = Paths.getSparrowAtlas('spooky_kids_assets');
 				frames = tex;
@@ -158,6 +159,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('danceRight');
+				antialiasing = Settings.antialiasing;
 			case 'mom':
 				tex = Paths.getSparrowAtlas('Mom_Assets');
 				frames = tex;
@@ -177,6 +179,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 20, -160);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 
 			case 'mom-car':
 				tex = Paths.getSparrowAtlas('momCar');
@@ -197,6 +200,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 20, -160);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 			case 'monster':
 				tex = Paths.getSparrowAtlas('Monster_Assets');
 				frames = tex;
@@ -212,6 +216,8 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
+
 			case 'monster-christmas':
 				tex = Paths.getSparrowAtlas('christmas/monsterChristmas');
 				frames = tex;
@@ -227,30 +233,14 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -40, -94);
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
+
 			case 'pico':
 				tex = Paths.getSparrowAtlas('Pico_FNF_assetss');
 				frames = tex;
 				animation.addByPrefix('idle', "Pico Idle Dance", 24);
 				animation.addByPrefix('singUP', 'pico Up note0', 24, false);
 				animation.addByPrefix('singDOWN', 'Pico Down Note0', 24, false);
-				if (isPlayer)
-				{
-					animation.addByPrefix('singLEFT', 'Pico NOTE LEFT0', 24, false);
-					animation.addByPrefix('singRIGHT', 'Pico Note Right0', 24, false);
-					animation.addByPrefix('singRIGHTmiss', 'Pico Note Right Miss', 24, false);
-					animation.addByPrefix('singLEFTmiss', 'Pico NOTE LEFT miss', 24, false);
-				}
-				else
-				{
-					// Need to be flipped! REDO THIS LATER!
-					animation.addByPrefix('singLEFT', 'Pico Note Right0', 24, false);
-					animation.addByPrefix('singRIGHT', 'Pico NOTE LEFT0', 24, false);
-					animation.addByPrefix('singRIGHTmiss', 'Pico NOTE LEFT miss', 24, false);
-					animation.addByPrefix('singLEFTmiss', 'Pico Note Right Miss', 24, false);
-				}
-
-				animation.addByPrefix('singUPmiss', 'pico Up note miss', 24);
-				animation.addByPrefix('singDOWNmiss', 'Pico Down Note MISS', 24);
 
 				addOffset('idle');
 				addOffset("singUP", -29, 27);
@@ -263,6 +253,7 @@ class Character extends FlxSprite
 				addOffset("singDOWNmiss", 210, -28);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 
 				flipX = true;
 
@@ -302,6 +293,7 @@ class Character extends FlxSprite
 				addOffset('scared', -4);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 
 				flipX = true;
 
@@ -331,6 +323,7 @@ class Character extends FlxSprite
 				addOffset("hey", 7, 4);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 
 				flipX = true;
 			case 'bf-car':
@@ -358,6 +351,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+				antialiasing = Settings.antialiasing;
+
 			case 'bf-pixel':
 				frames = Paths.getSparrowAtlas('weeb/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -495,6 +490,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
+				antialiasing = Settings.antialiasing;
 		}
 
 		dance();

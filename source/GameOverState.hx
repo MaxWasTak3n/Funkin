@@ -36,13 +36,6 @@ class GameOverState extends FlxTransitionableState
 		bf.playAnim('firstDeath');
 
 		FlxG.camera.follow(bf, LOCKON, 0.001);
-		/* 
-			var restart:FlxSprite = new FlxSprite(500, 50).loadGraphic(AssetPaths.restart.png);
-			restart.setGraphicSize(Std.int(restart.width * 0.6));
-			restart.updateHitbox();
-			restart.alpha = 0;
-			restart.antialiasing = true;
-			// add(restart); */
 
 		FlxG.sound.music.fadeOut(2, FlxG.sound.music.volume * 0.6);
 
