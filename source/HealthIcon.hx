@@ -6,25 +6,17 @@ class HealthIcon extends FlxSprite
 {
 
 	public var sprTracker:FlxSprite;
-
-	var player = PlayState.SONG.player1;
-	var opponent = PlayState.SONG.player2;
 	
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
-		antialiasing = true;
-
-		if (isPlayer == true) {
-			loadGraphic(Paths.image('icon-' + player), true, 150, 150);
-			animation.add(player, [0, 1], 0, false, true);
+		if (char != 'bf-pixel' && char != 'bf-old') {
+			char = char.split("-")[0]; }
+			loadGraphic(Paths.image('icon-' + char), true, 150, 150);
+			animation.add(char, [0, 1], 0, false, isPlayer);
 			animation.play(char);
-		} else {
-			loadGraphic(Paths.image('icon-' + opponent), true, 150, 150);
-			animation.add(opponent, [0, 1], 0, false, false);
-			animation.play(char);
-		}
-		scrollFactor.set();
+			antialiasing = true;
+			scrollFactor.set();
 	}
 
 	override function update(elapsed:Float)
