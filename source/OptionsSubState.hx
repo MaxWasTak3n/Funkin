@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['Downscroll', 'Antialiasing'];
+	var textMenuItems:Array<String> = [Settings.downscroll ? "Downscroll" : "Upscroll", Settings.antialiasing ? "Antialiasing" : "No Antialiasing"];
 
 	var selector:FlxSprite;
 	var curSelected:Int = 0;
