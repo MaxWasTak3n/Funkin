@@ -6,7 +6,7 @@ import flixel.input.keyboard.FlxKey;
 
 class Settings {
 	public static var downscroll:Bool = false;
-	public static var antialiasing:Bool = false;
+	public static var antialiasing:Bool = true;
 
 	public static function saveOptions() {
 		FlxG.save.data.downscroll = downscroll;

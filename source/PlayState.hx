@@ -1315,6 +1315,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.SPACE)
 			{
 				boyfriend.playAnim('hey');
+				FlxG.sound.play(Paths.sound('hey'));
 			}
 
 
