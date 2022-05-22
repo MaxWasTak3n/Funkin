@@ -23,6 +23,7 @@ class OptionsSubState extends MusicBeatSubstate
 		add(grpOptionsTexts);
 
 		selector = new FlxSprite().makeGraphic(5, 5, FlxColor.RED);
+		selector.alpha = 0;
 		add(selector);
 
 		for (i in 0...textMenuItems.length)
@@ -39,9 +40,11 @@ class OptionsSubState extends MusicBeatSubstate
 
 		if (controls.UP_P)
 			curSelected -= 1;
+			FlxG.sound.play(Paths.sound('scrollMenu'));
 
 		if (controls.DOWN_P)
 			curSelected += 1;
+			FlxG.sound.play(Paths.sound('scrollMenu'));
 
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
@@ -61,13 +64,25 @@ class OptionsSubState extends MusicBeatSubstate
 		{
 			switch (textMenuItems[curSelected])
 			{
-				case "Downscroll":
-					Settings.downscroll = true;
-					trace(Settings.downscroll);
-				case "Antialiasing":
-					Settings.antialiasing = true;
-					trace(Settings.antialiasing);
+				case "Downscroll" | "Upscroll":
+						Settings.downscroll = !Settings.downscroll;
+						Settings.saveOptions();
+						textMenuItems[0] = Settings.downscroll ? "Downscroll" : "Upscroll"; 
+						grpOptionsTexts.members[0].text = textMenuItems[0];
+
+
+						case "Antialiasing" | "No Antialiasing":
+						Settings.antialiasing = !Settings.antialiasing;
+						Settings.saveOptions();
+						textMenuItems[1] = Settings.antialiasing ? "Antialiasing" : "No Antialiasing"; 
+						grpOptionsTexts.members[1].text = textMenuItems[1];
 			}
 		}
+
+		if (controls.BACK)
+			{
+				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.switchState(new MainMenuState());
+			}
 	}
 }
