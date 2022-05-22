@@ -1360,13 +1360,6 @@ class PlayState extends MusicBeatState
 			persistentDraw = true;
 			paused = true;
 
-			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
-			{
-				// gitaroo man easter egg
-				FlxG.switchState(new GitarooPause());
-			}
-			else
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		
 			#if desktop
@@ -2347,7 +2340,6 @@ class PlayState extends MusicBeatState
 			if (SONG.notes[Math.floor(curStep / 16)].mustHitSection)
 				dad.dance();
 		}
-		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
 		wiggleShit.update(Conductor.crochet);
 
 		// HARDCODING FOR MILF ZOOMS!
@@ -2363,8 +2355,8 @@ class PlayState extends MusicBeatState
 			camHUD.zoom += 0.03;
 		}
 
-		FlxTween.tween(iconP1.scale, {x:1.3, y:1.3}, Conductor.crochet / 1000, { ease: FlxEase.circOut, type: FlxTween.BACKWARD });
-		FlxTween.tween(iconP2.scale, {x:1.3, y:1.3}, Conductor.crochet / 1000, { ease: FlxEase.circOut, type: FlxTween.BACKWARD });
+		FlxTween.tween(iconP1.scale, {x:1.3, y:1.3}, (Conductor.crochet / 1000) - 0.1, { ease: FlxEase.circOut, type: FlxTween.BACKWARD });
+		FlxTween.tween(iconP2.scale, {x:1.3, y:1.3}, (Conductor.crochet / 1000) - 0.1, { ease: FlxEase.circOut, type: FlxTween.BACKWARD });
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();

@@ -8,7 +8,7 @@ import flixel.util.FlxColor;
 
 class OptionsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['Downscroll', 'Antialiasing'];
+	var textMenuItems:Array<String> = ['Visuals', 'Gameplay'];
 
 	var selector:FlxSprite;
 	var curSelected:Int = 0;
@@ -20,9 +20,11 @@ class OptionsSubState extends MusicBeatSubstate
 		super();
 
 		grpOptionsTexts = new FlxTypedGroup<FlxText>();
+		grpOptionsTexts.screenCenter(X);
 		add(grpOptionsTexts);
 
 		selector = new FlxSprite().makeGraphic(5, 5, FlxColor.RED);
+		selector.alpha = 0;
 		add(selector);
 
 		for (i in 0...textMenuItems.length)
@@ -61,12 +63,12 @@ class OptionsSubState extends MusicBeatSubstate
 		{
 			switch (textMenuItems[curSelected])
 			{
-				case "Downscroll":
-					Settings.downscroll = true;
-					trace(Settings.downscroll);
-				case "Antialiasing":
-					Settings.antialiasing = true;
-					trace(Settings.antialiasing);
+				case "Visuals":
+					FlxG.state.closeSubState();
+					FlxG.state.openSubState(new VisualsSubState());
+					case "Gameplay":
+					FlxG.state.closeSubState();
+					FlxG.state.openSubState(new GameplaySubState());
 			}
 		}
 	}
