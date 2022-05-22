@@ -4,9 +4,7 @@ import flixel.FlxSprite;
 
 class HealthIcon extends FlxSprite
 {
-	/**
-	 * Used for FreeplayState! If you use it elsewhere, prob gonna annoying
-	 */
+
 	public var sprTracker:FlxSprite;
 
 	var player = PlayState.SONG.player1;
@@ -15,13 +13,17 @@ class HealthIcon extends FlxSprite
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
-		loadGraphic(Paths.image('icon-' + player), true, 150, 150);
-		loadGraphic(Paths.image('icon-' + opponent), true, 150, 150);
-
 		antialiasing = true;
-		animation.add(player, [0, 1], 0, false, isPlayer);
-		animation.add(opponent, [0, 1], 0, false, isPlayer);
-		animation.play(char);
+
+		if (isPlayer == true) {
+			loadGraphic(Paths.image('icon-' + player), true, 150, 150);
+			animation.add(player, [0, 1], 0, false, true);
+			animation.play(char);
+		} else {
+			loadGraphic(Paths.image('icon-' + opponent), true, 150, 150);
+			animation.add(opponent, [0, 1], 0, false, false);
+			animation.play(char);
+		}
 		scrollFactor.set();
 	}
 
