@@ -115,6 +115,8 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 	var songScore:Int = 0;
 	var songMisses:Int = 0;
+	var songAccuracy:Float = 0;
+	var notesHit:Float = 0;
 	var scoreTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
@@ -1306,7 +1308,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo;
+		scoreTxt.text = "Score:" + songScore + ' | Misses: ' + songMisses + ' | Combo: ' + combo + ' | Accuracy: ' + Math.floor((notesHit / songAccuracy) * 100) + '%';
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -1635,7 +1637,8 @@ class PlayState extends MusicBeatState
 								
 								health -= 0.0475;
 								vocals.volume = 0;
-							}
+								songMisses += 1;
+						}
 			
 							daNote.active = false;
 							daNote.visible = false;
@@ -1736,10 +1739,14 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
+	function updateAccuracy()
+		{
+			songAccuracy += 1;
+		}
+
 	private function popUpScore(strumtime:Float):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
-		// boyfriend.playAnim('hey');
 		vocals.volume = 1;
 
 		var placement:String = Std.string(combo);
@@ -1747,7 +1754,6 @@ class PlayState extends MusicBeatState
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.55;
-		//
 
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
@@ -1758,17 +1764,32 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'shit';
 			score = 50;
+			songAccuracy += 1;
+			trace('SHIT! NOTES HIT: ' + notesHit);
+			trace('SHIT! ACCURACY: ' + songAccuracy);
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
+			songAccuracy += 0.55;
+			trace('BAD.. NOTES HIT: ' + notesHit);
+			trace('BAD.. ACCURACY: ' + songAccuracy);
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
+			songAccuracy += 0.25;
+			trace('GOOD NOTES HIT: ' + notesHit);
+			trace('GOOD ACCURACY: ' + songAccuracy);
 		}
+
+		if (daRating == 'sick')
+			{
+				trace('SICK!!!! NOTES HIT: ' + notesHit);
+				trace('SICK!!!! ACCURACY: ' + songAccuracy);
+			}
 
 		songScore += score;
 
@@ -1968,36 +1989,6 @@ class PlayState extends MusicBeatState
 				{
 					noteCheck(controlArray[daNote.noteData], daNote);
 				}
-				/* 
-					if (controlArray[daNote.noteData])
-						goodNoteHit(daNote);
-				 */
-				// trace(daNote.noteData);
-				/* 
-						switch (daNote.noteData)
-						{
-							case 2: // NOTES YOU JUST PRESSED
-								if (upP || rightP || downP || leftP)
-									noteCheck(upP, daNote);
-							case 3:
-								if (upP || rightP || downP || leftP)
-									noteCheck(rightP, daNote);
-							case 1:
-								if (upP || rightP || downP || leftP)
-									noteCheck(downP, daNote);
-							case 0:
-								if (upP || rightP || downP || leftP)
-									noteCheck(leftP, daNote);
-						}
-
-					//this is already done in noteCheck / goodNoteHit
-					if (daNote.wasGoodHit)
-					{
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}
-				 */
 			}
 			else
 			{
@@ -2091,8 +2082,6 @@ class PlayState extends MusicBeatState
 			songMisses += 1;
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
-			// FlxG.log.add('played imss note');
 
 			boyfriend.stunned = true;
 
@@ -2133,6 +2122,8 @@ class PlayState extends MusicBeatState
 			noteMiss(2);
 		if (rightP)
 			noteMiss(3);
+
+		updateAccuracy();
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void
@@ -2153,6 +2144,7 @@ class PlayState extends MusicBeatState
 			{
 				popUpScore(note.strumTime);
 				combo += 1;
+				notesHit += 1;
 			}
 
 			if (note.noteData >= 0)
@@ -2188,6 +2180,8 @@ class PlayState extends MusicBeatState
 				note.kill();
 				notes.remove(note, true);
 				note.destroy();
+				
+				updateAccuracy();
 			}
 		}
 	}
@@ -2261,8 +2255,6 @@ class PlayState extends MusicBeatState
 		gf.playAnim('hairFall');
 		phillyTrain.x = FlxG.width + 200;
 		trainMoving = false;
-		// trainSound.stop();
-		// trainSound.time = 0;
 		trainCars = 8;
 		trainFinishing = false;
 		startedMoving = false;
