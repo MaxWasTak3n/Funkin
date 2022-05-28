@@ -121,6 +121,7 @@ class Note extends FlxSprite
 		{
 			noteScore * 0.2;
 			alpha = 0.6;
+			flipY = Settings.downscroll;
 
 			x += width / 2;
 
