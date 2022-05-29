@@ -1089,7 +1089,6 @@ class PlayState extends MusicBeatState
 	{
 		for (i in 0...4)
 		{
-			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
 
 			switch (curStage)
@@ -1553,40 +1552,10 @@ class PlayState extends MusicBeatState
 					daNote.active = true;
 				}
 
-				var center:Float = strumLine.y + Note.swagWidth / 2;
-				if (Settings.downscroll) {
-					daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
-					if (daNote.isSustainNote) {
-						if (daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null) {
-							daNote.y += daNote.prevNote.height;
-						} else {
-							daNote.y += daNote.height / 2;
-						}
-
-						if(daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= center
-							&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
-						{
-							var swagRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
-							swagRect.height = (center - daNote.y) / daNote.scale.y;
-							swagRect.y = daNote.frameHeight - swagRect.height;
-
-							daNote.clipRect = swagRect;
-						}
-					}
-				} else {
-					daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(SONG.speed, 2));
-
-					if (daNote.isSustainNote
-						&& daNote.y + daNote.offset.y * daNote.scale.y <= center
-						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
-					{
-						var swagRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
-						swagRect.y = (center - daNote.y) / daNote.scale.y;
-						swagRect.height -= swagRect.y;
-
-						daNote.clipRect = swagRect;
-					}
-				}
+				if (Settings.downscroll)
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+				else
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
 				if (!daNote.mustPress && daNote.wasGoodHit)
 				{
@@ -1623,29 +1592,33 @@ class PlayState extends MusicBeatState
 					daNote.destroy();
 				}
 
-				if (Settings.downscroll ? (daNote.y > strumLine.y + daNote.height + 50) : (daNote.y < strumLine.y - daNote.height - 50))
+				if (daNote.isSustainNote && daNote.wasGoodHit && daNote.y >= strumLine.y) {
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
+				}
+			
+				if (daNote.y < -daNote.height && !Settings.downscroll && !daNote.isSustainNote || daNote.y >= strumLine.y + 106 && Settings.downscroll && daNote.isSustainNote)
 					{
-						if (daNote.tooLate) {
-									
-								daNote.active = false;
-								daNote.visible = false;
-				
-								daNote.destroy();
-							}
-						else {
-						if (daNote.tooLate || !daNote.wasGoodHit) {
-								
-								health -= 0.0475;
-								vocals.volume = 0;
-								songMisses += 1;
-						}
-			
-							daNote.active = false;
-							daNote.visible = false;
-			
+						if (daNote.isSustainNote && daNote.wasGoodHit)
+						{
+							daNote.kill();
+							notes.remove(daNote, true);
 							daNote.destroy();
-	
 						}
+						else
+						{
+							health -= 0.03;
+							vocals.volume = 0;
+							noteMiss(daNote.noteData);
+						}
+	
+						daNote.active = false;
+						daNote.visible = false;
+	
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
 					}
 			});
 		}
@@ -1653,10 +1626,8 @@ class PlayState extends MusicBeatState
 		if (!inCutscene)
 			keyShit();
 
-		#if debug
 		if (FlxG.keys.justPressed.ONE)
-			endSong();
-		#end
+			health = 2;
 	}
 
 	function endSong():Void
@@ -1765,31 +1736,19 @@ class PlayState extends MusicBeatState
 			daRating = 'shit';
 			score = 50;
 			songAccuracy += 1;
-			trace('SHIT! NOTES HIT: ' + notesHit);
-			trace('SHIT! ACCURACY: ' + songAccuracy);
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
 			songAccuracy += 0.55;
-			trace('BAD.. NOTES HIT: ' + notesHit);
-			trace('BAD.. ACCURACY: ' + songAccuracy);
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
 			songAccuracy += 0.25;
-			trace('GOOD NOTES HIT: ' + notesHit);
-			trace('GOOD ACCURACY: ' + songAccuracy);
 		}
-
-		if (daRating == 'sick')
-			{
-				trace('SICK!!!! NOTES HIT: ' + notesHit);
-				trace('SICK!!!! ACCURACY: ' + songAccuracy);
-			}
 
 		songScore += score;
 
