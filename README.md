@@ -1,6 +1,7 @@
 ![Logo](https://upload.wikimedia.org/wikipedia/commons/d/d7/FNF-Logo.svg)
 
-![Repository Size](https://img.shields.io/github/repo-size/MaxWasTak3n/Funkin) ![Total lines](https://img.shields.io/tokei/lines/github/MaxWasTak3n/Funkin)
+![Repository Size](https://img.shields.io/github/repo-size/MaxWasTak3n/Funkin)
+
 
 <!---ADD GAMEPLAY GIFS!!!!--->
 
