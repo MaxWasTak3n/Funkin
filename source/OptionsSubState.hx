@@ -40,11 +40,9 @@ class OptionsSubState extends MusicBeatSubstate
 
 		if (controls.UP_P)
 			curSelected -= 1;
-			FlxG.sound.play(Paths.sound('scrollMenu'));
 
 		if (controls.DOWN_P)
 			curSelected += 1;
-			FlxG.sound.play(Paths.sound('scrollMenu'));
 
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
