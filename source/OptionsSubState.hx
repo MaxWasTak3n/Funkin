@@ -9,8 +9,6 @@ import flixel.util.FlxColor;
 class OptionsSubState extends MusicBeatSubstate
 {
 	var textMenuItems:Array<String> = [Settings.downscroll ? "Downscroll" : "Upscroll", Settings.antialiasing ? "Antialiasing" : "No Antialiasing"];
-
-	var selector:FlxSprite;
 	var curSelected:Int = 0;
 
 	var grpOptionsTexts:FlxTypedGroup<FlxText>;
@@ -22,13 +20,11 @@ class OptionsSubState extends MusicBeatSubstate
 		grpOptionsTexts = new FlxTypedGroup<FlxText>();
 		add(grpOptionsTexts);
 
-		selector = new FlxSprite().makeGraphic(5, 5, FlxColor.RED);
-		selector.alpha = 0;
-		add(selector);
-
 		for (i in 0...textMenuItems.length)
 		{
 			var optionText:FlxText = new FlxText(20, 20 + (i * 50), 0, textMenuItems[i], 32);
+                        optionText.setFormat(Paths.font("vcr.ttf"), 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+ 		        optionText.borderSize = 1.5;
 			optionText.ID = i;
 			grpOptionsTexts.add(optionText);
 		}
