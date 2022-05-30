@@ -1,4 +1,4 @@
-![Logo](https://upload.wikimedia.org/wikipedia/commons/d/d7/FNF-Logo.svg)
+![Logo](assets/shared/images/6E382579-FC37-4542-8E4E-037BD54484A9.png)
 
 ![Repository Size](https://img.shields.io/github/repo-size/MaxWasTak3n/Funkin)
 
