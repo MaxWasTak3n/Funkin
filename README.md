@@ -1,5 +1,3 @@
-![Logo](assets/shared/images/6E382579-FC37-4542-8E4E-037BD54484A9.png)
-
 ![Repository Size](https://img.shields.io/github/repo-size/MaxWasTak3n/Funkin)
 
 
