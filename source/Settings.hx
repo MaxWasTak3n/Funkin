@@ -8,11 +8,13 @@ class Settings {
 	public static var downscroll:Bool = false;
 	public static var antialiasing:Bool = true;
 	public static var dfjk:Bool = true;
+	public static var gTap:Bool = true;
 
 	public static function saveOptions() {
 		FlxG.save.data.downscroll = downscroll;
 		FlxG.save.data.antialiasing = antialiasing;
 		FlxG.save.data.dfjk = dfjk;
+		FlxG.save.data.gTap = gTap;
 		FlxG.save.flush();
 	}
 
@@ -25,6 +27,9 @@ class Settings {
 		}
 		if(FlxG.save.data.dfjk != null) {
 			dfjk = FlxG.save.data.dfjk;
+		}
+		if(FlxG.save.data.gTap != null) {
+			gTap = FlxG.save.data.gTap;
 		}
 	}
 }

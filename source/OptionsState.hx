@@ -11,8 +11,9 @@ import flixel.util.FlxColor;
 class OptionsState extends MusicBeatSubstate
 {
 	var textMenuItems:Array<String> = [Settings.downscroll ? "Downscroll" : "Upscroll",
-	Settings.antialiasing ? "Antialiasing" : "No Antialiasing",
-	Settings.dfjk ? "DFJK" : "Arrow Keys"
+	Settings.gTap ? "Ghost Tapping" : "No Ghost Tapping",
+	Settings.dfjk ? "DFJK" : "Arrow Keys",
+	Settings.antialiasing ? "Antialiasing" : "No Antialiasing"
 ];
 	var curSelected:Int = 0;
 
@@ -37,7 +38,7 @@ class OptionsState extends MusicBeatSubstate
 		{
 			var optionText:FlxText = new FlxText(30, 0, 0, textMenuItems[i], 32);
             optionText.setFormat(Paths.font("phantomMuff.ttf"), 70, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			optionText.y += (100 * (i - (textMenuItems.length / 2))) + 170;
+			optionText.y += (100 * (i - (textMenuItems.length / 2))) + 230;
  			optionText.borderSize = 4;
 			optionText.ID = i;
 			grpOptionsTexts.add(optionText);
@@ -79,22 +80,28 @@ class OptionsState extends MusicBeatSubstate
 						grpOptionsTexts.members[0].text = textMenuItems[0];
 
 
+						case "Ghost Tapping" | "No Ghost Tapping":
+							Settings.gTap = !Settings.gTap;
+							Settings.saveOptions();
+							textMenuItems[1] = Settings.gTap ? "Ghost Tapping" : "No Ghost Tapping"; 
+							grpOptionsTexts.members[1].text = textMenuItems[1];
+
+
+						case "DFJK" | "Arrow Keys":
+							Settings.dfjk = !Settings.dfjk;
+							Settings.saveOptions();
+							textMenuItems[2] = Settings.dfjk ? "DFJK" : "Arrow Keys"; 
+							grpOptionsTexts.members[2].text = textMenuItems[2];
+							if (Settings.dfjk)
+							controls.setKeyboardScheme(KeyboardScheme.Solo, true);
+							else
+							controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
+
 						case "Antialiasing" | "No Antialiasing":
 						Settings.antialiasing = !Settings.antialiasing;
 						Settings.saveOptions();
-						textMenuItems[1] = Settings.antialiasing ? "Antialiasing" : "No Antialiasing"; 
-						grpOptionsTexts.members[1].text = textMenuItems[1];
-						
-
-						case "DFJK" | "Arrow Keys":
-						Settings.dfjk = !Settings.dfjk;
-						Settings.saveOptions();
-						textMenuItems[2] = Settings.dfjk ? "DFJK" : "Arrow Keys"; 
-						grpOptionsTexts.members[2].text = textMenuItems[2];
-						if (Settings.dfjk)
-							controls.setKeyboardScheme(KeyboardScheme.Solo, true);
-						else
-							controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
+						textMenuItems[3] = Settings.antialiasing ? "Antialiasing" : "No Antialiasing"; 
+						grpOptionsTexts.members[3].text = textMenuItems[3];
 			}
 		}
 
