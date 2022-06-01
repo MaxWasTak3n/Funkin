@@ -228,12 +228,14 @@ class ChartingState extends MusicBeatState
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
+			updateHeads();
 		});
 		player1DropDown.selectedLabel = _song.player1;
 
 		var player2DropDown = new FlxUIDropDownMenu(140, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player2 = characters[Std.parseInt(character)];
+			updateHeads();
 		});
 
 		player2DropDown.selectedLabel = _song.player2;
@@ -542,6 +544,7 @@ class ChartingState extends MusicBeatState
 		{
 			lastSection = curSection;
 
+			FlxG.mouse.visible = false;
 			PlayState.SONG = _song;
 			FlxG.sound.music.stop();
 			vocals.stop();
@@ -791,13 +794,13 @@ class ChartingState extends MusicBeatState
 	{
 		if (check_mustHitSection.checked)
 		{
-			leftIcon.changeIcon('bf');
-			rightIcon.changeIcon('dad');
+			leftIcon.changeIcon(_song.player1);
+			rightIcon.changeIcon(_song.player2);
 		}
 		else
 		{
-			leftIcon.changeIcon('dad');
-			rightIcon.changeIcon('bf');
+			leftIcon.changeIcon(_song.player2);
+			rightIcon.changeIcon(_song.player1);
 		}
 	}
 
