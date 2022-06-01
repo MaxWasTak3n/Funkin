@@ -8,6 +8,7 @@
 It adds:
 * Options Menu
 * Downscroll
+* Fixed Inputs
 * Nothing else (for now)
 
 ## Credits
