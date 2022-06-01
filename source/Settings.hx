@@ -7,10 +7,12 @@ import flixel.input.keyboard.FlxKey;
 class Settings {
 	public static var downscroll:Bool = false;
 	public static var antialiasing:Bool = true;
+	public static var dfjk:Bool = true;
 
 	public static function saveOptions() {
 		FlxG.save.data.downscroll = downscroll;
 		FlxG.save.data.antialiasing = antialiasing;
+		FlxG.save.data.dfjk = dfjk;
 		FlxG.save.flush();
 	}
 
@@ -20,6 +22,9 @@ class Settings {
 		}
 		if(FlxG.save.data.antialiasing != null) {
 			antialiasing = FlxG.save.data.antialiasing;
+		}
+		if(FlxG.save.data.dfjk != null) {
+			dfjk = FlxG.save.data.dfjk;
 		}
 	}
 }

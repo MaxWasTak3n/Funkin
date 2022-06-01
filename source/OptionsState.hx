@@ -1,14 +1,19 @@
 package;
 
+import Controls.KeyboardScheme;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
-class OptionsSubState extends MusicBeatSubstate
+class OptionsState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = [Settings.downscroll ? "Downscroll" : "Upscroll", Settings.antialiasing ? "Antialiasing" : "No Antialiasing"];
+	var textMenuItems:Array<String> = [Settings.downscroll ? "Downscroll" : "Upscroll",
+	Settings.antialiasing ? "Antialiasing" : "No Antialiasing",
+	Settings.dfjk ? "DFJK" : "Arrow Keys"
+];
 	var curSelected:Int = 0;
 
 	var grpOptionsTexts:FlxTypedGroup<FlxText>;
@@ -17,14 +22,22 @@ class OptionsSubState extends MusicBeatSubstate
 	{
 		super();
 
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		menuBG.color = 0x4550f5;
+		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+		menuBG.updateHitbox();
+		menuBG.screenCenter();
+		menuBG.antialiasing = Settings.antialiasing;
+		add(menuBG);
+
 		grpOptionsTexts = new FlxTypedGroup<FlxText>();
 		add(grpOptionsTexts);
 
 		for (i in 0...textMenuItems.length)
 		{
 			var optionText:FlxText = new FlxText(20, 20 + (i * 50), 0, textMenuItems[i], 32);
-                        optionText.setFormat(Paths.font("vcr.ttf"), 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
- 		        optionText.borderSize = 1.5;
+            optionText.setFormat(Paths.font("vcr.ttf"), 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+ 			optionText.borderSize = 1.5;
 			optionText.ID = i;
 			grpOptionsTexts.add(optionText);
 		}
@@ -70,6 +83,17 @@ class OptionsSubState extends MusicBeatSubstate
 						Settings.saveOptions();
 						textMenuItems[1] = Settings.antialiasing ? "Antialiasing" : "No Antialiasing"; 
 						grpOptionsTexts.members[1].text = textMenuItems[1];
+						
+
+						case "DFJK" | "Arrow Keys":
+						Settings.dfjk = !Settings.dfjk;
+						Settings.saveOptions();
+						textMenuItems[2] = Settings.dfjk ? "DFJK" : "Arrow Keys"; 
+						grpOptionsTexts.members[2].text = textMenuItems[2];
+						if (Settings.dfjk)
+							controls.setKeyboardScheme(KeyboardScheme.Solo, true);
+						else
+							controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
 			}
 		}
 

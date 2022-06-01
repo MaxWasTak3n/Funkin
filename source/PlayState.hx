@@ -1483,6 +1483,7 @@ class PlayState extends MusicBeatState
 					// FlxG.switchState(new PlayState());
 			}
 		}
+		// better streaming of shit
 
 		if (health <= 0)
 		{
@@ -1914,7 +1915,8 @@ class PlayState extends MusicBeatState
 				}
 	
 				notesThatCanBeHit.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-				else if (notesThatCanBeHit.length > 0)
+	
+				if (notesThatCanBeHit.length > 0)
 				{
 					for (i in 0...pressArray.length)
 					{
