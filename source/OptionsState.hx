@@ -35,9 +35,10 @@ class OptionsState extends MusicBeatSubstate
 
 		for (i in 0...textMenuItems.length)
 		{
-			var optionText:FlxText = new FlxText(20, 20 + (i * 50), 0, textMenuItems[i], 32);
-            optionText.setFormat(Paths.font("vcr.ttf"), 50, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
- 			optionText.borderSize = 1.5;
+			var optionText:FlxText = new FlxText(30, 0, 0, textMenuItems[i], 32);
+            optionText.setFormat(Paths.font("phantomMuff.ttf"), 70, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			optionText.y += (100 * (i - (textMenuItems.length / 2))) + 170;
+ 			optionText.borderSize = 4;
 			optionText.ID = i;
 			grpOptionsTexts.add(optionText);
 		}
