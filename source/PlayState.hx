@@ -1101,7 +1101,7 @@ class PlayState extends MusicBeatState
 
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * daPixelZoom));
 					babyArrow.updateHitbox();
-					babyArrow.antialiasing = Settings.antialiasing;
+					babyArrow.antialiasing = false;
 
 					switch (Math.abs(i))
 					{
@@ -1579,7 +1579,7 @@ class PlayState extends MusicBeatState
 					daNote.destroy();
 				}
 			
-				if (daNote.y < -daNote.height && !Settings.downscroll && !daNote.isSustainNote || daNote.y >= strumLine.y + 106 && Settings.downscroll && daNote.isSustainNote)
+				if (daNote.y < -daNote.height && !Settings.downscroll && !daNote.isSustainNote || daNote.y >= strumLine.y + 106 && Settings.downscroll)
 					{
 						if (daNote.isSustainNote && daNote.wasGoodHit)
 						{

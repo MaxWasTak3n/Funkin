@@ -165,7 +165,8 @@ class ChartingState extends MusicBeatState
 		addSongUI();
 		addSectionUI();
 		addNoteUI();
-
+		updateHeads();
+		
 		add(curRenderedNotes);
 		add(curRenderedSustains);
 
@@ -501,6 +502,12 @@ class ChartingState extends MusicBeatState
 			{
 				curRenderedNotes.forEach(function(note:Note)
 				{
+					
+					if(note.strumTime <= Conductor.songPosition) {
+						note.alpha = 0.4;
+						trace('note is after thingy');
+					}
+
 					if (FlxG.mouse.overlaps(note))
 					{
 						if (FlxG.keys.pressed.CONTROL)
@@ -791,18 +798,18 @@ class ChartingState extends MusicBeatState
 	}
 
 	function updateHeads():Void
-	{
-		if (check_mustHitSection.checked)
 		{
-			leftIcon.changeIcon(_song.player1);
-			rightIcon.changeIcon(_song.player2);
+			if (check_mustHitSection.checked)
+			{
+				leftIcon.changeIcon(_song.player1);
+				rightIcon.changeIcon(_song.player2);
+			}
+			else
+			{
+				leftIcon.changeIcon(_song.player2);
+				rightIcon.changeIcon(_song.player1);
+			}
 		}
-		else
-		{
-			leftIcon.changeIcon(_song.player2);
-			rightIcon.changeIcon(_song.player1);
-		}
-	}
 
 	function updateNoteUI():Void
 	{
