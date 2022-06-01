@@ -30,7 +30,7 @@ class FreeplayState extends MusicBeatState
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 
-	//private var iconArray:Array<HealthIcon> = [];
+	private var iconArray:Array<HealthIcon> = [];
 
 	override function create()
 	{
@@ -84,27 +84,11 @@ class FreeplayState extends MusicBeatState
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-			// TODO REDO!!!
-			/*loadGraphic(Paths.image('icon-bf'), true, 150, 150);
-			loadGraphic(Paths.image('icon-gf'), true, 150, 150);
-			loadGraphic(Paths.image('icon-dad'), true, 150, 150);
-			loadGraphic(Paths.image('icon-mom'), true, 150, 150);
-			loadGraphic(Paths.image('icon-monster'), true, 150, 150);
-			loadGraphic(Paths.image('icon-spooky'), true, 150, 150);
-			loadGraphic(Paths.image('icon-bf-pixel'), true, 150, 150);
-			loadGraphic(Paths.image('icon-senpai'), true, 150, 150);
-			loadGraphic(Paths.image('icon-spirit'), true, 150, 150);
-
 			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;
 
-			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
-			add(icon);*/
-
-			// songText.x += 40;
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
-			// songText.screenCenter(X);
+			add(icon);
 		}
 
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
@@ -255,12 +239,12 @@ class FreeplayState extends MusicBeatState
 
 		var bullShit:Int = 0;
 
-		/*for (i in 0...iconArray.length)
+		for (i in 0...iconArray.length)
 		{
 			iconArray[i].alpha = 0.6;
 		}
 
-		iconArray[curSelected].alpha = 1;*/
+		iconArray[curSelected].alpha = 1;
 
 		for (item in grpSongs.members)
 		{
