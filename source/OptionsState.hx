@@ -37,7 +37,7 @@ class OptionsState extends MusicBeatSubstate
 		for (i in 0...textMenuItems.length)
 		{
 			var optionText:FlxText = new FlxText(30, 0, 0, textMenuItems[i], 32);
-            optionText.setFormat(Paths.font("phantomMuff.ttf"), 70, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+            optionText.setFormat(Paths.font("phantomMuff.ttf"), 70, FlxColor.WHITE, CENTER);
 			optionText.y += (100 * (i - (textMenuItems.length / 2))) + 230;
  			optionText.borderSize = 4;
 			optionText.ID = i;
@@ -98,10 +98,10 @@ class OptionsState extends MusicBeatSubstate
 							controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
 
 						case "Antialiasing" | "No Antialiasing":
-						Settings.antialiasing = !Settings.antialiasing;
-						Settings.saveOptions();
-						textMenuItems[3] = Settings.antialiasing ? "Antialiasing" : "No Antialiasing"; 
-						grpOptionsTexts.members[3].text = textMenuItems[3];
+							Settings.antialiasing = !Settings.antialiasing;
+							Settings.saveOptions();
+							textMenuItems[3] = Settings.antialiasing ? "Antialiasing" : "No Antialiasing"; 
+							grpOptionsTexts.members[3].text = textMenuItems[3];
 			}
 		}
 
